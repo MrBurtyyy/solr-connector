@@ -1,0 +1,42 @@
+{
+  "name": "solr-connector",
+  "version": "0.1.0",
+  "description": "A library for constructing Solr based queries and running them against a Solr instance",
+  "main": "index.js",
+  "scripts": {
+    "prepublish": "node_modules/babel-cli/bin/babel.js src --out-dir lib",
+    "clean": "rimraf lib/",
+    "test": "jest tests/*",
+    "start": "nodemon --exec babel-node index.js"
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ]
+    ]
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.4.4",
+    "@types/jest": "^24.0.11",
+    "babel-jest": "^24.7.1",
+    "eslint": "^5.16.0",
+    "jest": "^24.7.1",
+    "nodemon": "^1.18.11",
+    "rimraf": "^2.6.3"
+  },
+  "dependencies": {
+    "lodash": "^4.17.11",
+    "query-string": "^6.5.0"
+  }
+}
