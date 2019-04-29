@@ -4,6 +4,7 @@ import querystring from "query-string";
 const QUERY_KEY = "q";
 const FILTER_QUERY_KEY = "fq";
 const NUMBER_OF_ROWS_KEY = "rows";
+const FIELD_LIST_KEY = "fl";
 
 export default class SolrQuery {
   constructor() {
@@ -26,12 +27,30 @@ export default class SolrQuery {
 
   /**
    * Add a filter query to the Solr query
-   * @param {String|Array<String>}
+   * @param {String|Array<String>} filterQuery - Single or multiple filter queries
    */
   withFilterQuery(filterQuery) {
-    this.addValueToParams(FILTER_QUERY_KEY, filterQuery);
+    if (Array.isArray(filterQuery) || _.isString(filterQuery)) {
+      this.addValueToParams(FILTER_QUERY_KEY, filterQuery);
+    }
     return this;
   }
+
+  /**
+   * Set the field list of the Solr query
+   * @param {String|Array<String>} fieldList
+   */
+  withFieldList(fieldList) {
+    if (Array.isArray(fieldList)) {
+      this.setParameter(FIELD_LIST_KEY, fieldList.join(","));
+    } else if (_.isString(fieldList)) {
+      this.setParameter(FIELD_LIST_KEY, fieldList);
+    }
+
+    return this;
+  }
+
+  withFacet(facetField) {}
 
   /**
    *

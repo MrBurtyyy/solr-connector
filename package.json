@@ -6,7 +6,7 @@
   "scripts": {
     "prepublish": "node_modules/babel-cli/bin/babel.js src --out-dir lib",
     "clean": "rimraf lib/",
-    "test": "jest tests/*",
+    "test": "jest --verbose tests/*",
     "start": "nodemon --exec babel-node index.js"
   },
   "babel": {
@@ -30,12 +30,14 @@
     "@babel/preset-env": "^7.4.4",
     "@types/jest": "^24.0.11",
     "babel-jest": "^24.7.1",
+    "dotenv": "^7.0.0",
     "eslint": "^5.16.0",
     "jest": "^24.7.1",
     "nodemon": "^1.18.11",
     "rimraf": "^2.6.3"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "lodash": "^4.17.11",
     "query-string": "^6.5.0"
   }

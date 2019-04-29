@@ -11,7 +11,7 @@ test("SolrClient: Constant - HTTPS", function() {
   expect(http).toMatch(/https/);
 });
 
-test("SolrClient: createQuery is not undefined or null", function() {
+test("SolrClient: createQuery does not return undefined or null", function() {
   const client = new SolrClient("localhost", 8983);
   const query = client.createQuery();
   expect(query).not.toBeUndefined();
@@ -34,6 +34,12 @@ test("SolrClient: Port must be a valid number", function() {
   expect(invalidPortNumber).toThrowError(InvalidSolrOption);
 });
 
+test("SolrClient: Port can be a valid numberical string", function() {
+  const client = new SolrClient("localhost", "123");
+  expect(client).not.toBeUndefined();
+  expect(client).not.toBeNull();
+});
+
 test("SolrClient: executeQuery requires instance of SolrQuery", function() {
   const queryWithoutObject = function() {
     const client = new SolrClient("localhost", 2181);
@@ -47,4 +53,17 @@ test("SolrClient: executeQuery requires instance of SolrQuery", function() {
 
   expect(queryWithoutObject).toThrowError(InvalidSolrOption);
   expect(queryWithObject).not.toThrowError(InvalidSolrOption);
+});
+
+test("SolrClient: generateBasicAuthentication should return correct string", function() {
+  const client = new SolrClient("localhost", 8983);
+  const basicAuthString = client.generateBasicAuthentication("unit", "test");
+  expect(basicAuthString).toEqual("Basic dW5pdDp0ZXN0");
+});
+
+test("SolrClient: executeQuery returns a Promise", function() {
+  const client = new SolrClient("localhost", 8983);
+  const query = client.createQuery();
+  const promise = client.executeQuery(query, "unittest");
+  expect(promise).toHaveProperty("then"); // Check to make sure it is a promise
 });
